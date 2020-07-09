@@ -1,1 +1,1 @@
-# spectrazam
+# Spectrazam
