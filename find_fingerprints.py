@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[15]:
-
-
 import numpy as np
 
 import matplotlib.pyplot as plt
@@ -12,12 +6,6 @@ import matplotlib.mlab as mlab
 from scipy.ndimage.filters import maximum_filter
 from scipy.ndimage.morphology import generate_binary_structure, binary_erosion
 from scipy.ndimage.morphology import iterate_structure
-
-get_ipython().run_line_magic('matplotlib', 'notebook')
-
-
-# In[16]:
-
 
 from numba import njit
 
@@ -116,9 +104,6 @@ def local_peak_locations(data_2d, neighborhood, amp_min):
     return _peaks(data_2d, rows, cols, amp_min=amp_min)
 
 
-# In[17]:
-
-
 def fingerprint(data, fp, amp_min, fanout): 
     """
     Returns all fingerprints associated with a song
@@ -156,7 +141,7 @@ def fingerprint(data, fp, amp_min, fanout):
     print(len(peaks))
 
     for i in range(len(peaks)):
-        fm = peaks[i][1]
+        fm = peaks[i][0]
         
         r = min(i + fanout, len(peaks))
         
@@ -164,11 +149,11 @@ def fingerprint(data, fp, amp_min, fanout):
         
         for j in loop_over:
 
-            fn = peaks[j][1]
+            fn = peaks[j][0]
 
-            dt = peaks[j][0] - peaks[i][0]
+            dt = peaks[j][1] - peaks[i][1]
 
-            tm = peaks[i][0]
+            tm = peaks[i][1]
             
             
             insert = [tuple([fm,fn,dt]), tm]
@@ -176,30 +161,4 @@ def fingerprint(data, fp, amp_min, fanout):
             fingerprints.append(tuple(insert))
     
     
-    return fingerprints 
-
-
-
-
-        
-
-        
-
-
-# In[4]:
-
-
-
-
-
-# In[18]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
+    return fingerprints

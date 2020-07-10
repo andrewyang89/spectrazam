@@ -1,6 +1,9 @@
 import pickle
 from pathlib import Path
 
+from song_titles_artists import song_name_to_ID
+
+
 def db_save(song_set: dict, filename="song_database.pkl"):
     """Saves the input database in binary
 
