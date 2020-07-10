@@ -1,7 +1,7 @@
 import pickle
 from pathlib import Path
 
-def save(song_set: dict, filename="song_database.pkl"):
+def db_save(song_set: dict, filename="song_database.pkl"):
     """Saves the input database in binary
 
         Parameters
@@ -17,13 +17,18 @@ def save(song_set: dict, filename="song_database.pkl"):
         -------
         None
 
+        Notes
+        -----
+        Will clear any prior data in the file; to append a fingerprint: id,
+        key: value pair without clearing the current database, please use
+        db_add((<fingerprint>,))
+
     """
-    # pickling the song dictionary
     with open(filename, mode="wb") as database:
         pickle.dump(song_set, database)
 
 
-def load(file_path=Path("./song_database.pkl")):
+def db_load(file_path=Path("./song_database.pkl")):
     """Loads a read-only version of the database in binary
 
         Parameters
@@ -43,9 +48,5 @@ def load(file_path=Path("./song_database.pkl")):
         super-er superdirectory will raise a FileNotFoundError
 
     """
-
     with open(file_path, mode="rb") as database:
         return pickle.load(database)
-
-
-def
