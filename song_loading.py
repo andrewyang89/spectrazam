@@ -28,13 +28,14 @@ def load_song_from_path(path: str):
 
     Returns
     -------
-    Tuple[np.narray, int, float]
+    Tuple[np.ndarray, int, float]
         The list of samples, the sampling rate and the duration of the song
     """
     song_path = Path(path)
     samples, sampling_rate = librosa.load(song_path, sr=None)
     duration = librosa.get_duration(y=samples, sr=sampling_rate)
-    samples /= max(samples)
+    samples.astype("float32")
+    samples /= np.max(samples)
     samples *= 2**15
     return samples, sampling_rate, duration
 
@@ -57,7 +58,7 @@ def load_music_files(directory: str):
     np.ndarray size: (M,N)
         The array of samples for each song
     """
-    files = [f for f in listdir(directory) if isfile(join(directory, f))]
+    files = sorted([f for f in listdir(directory) if isfile(join(directory, f))])
     music_list = np.array([load_song_from_path(directory + paths)[0] for paths in files])
     id_dict = sta.song_name_to_ID(files)
     ids = [id_dict[title] for title in files]
@@ -105,14 +106,15 @@ def record_sound(time: float):
 
     Returns
     -------
-    Tuple[np.narray, int]
+    Tuple[np.ndarray, int]
         The frames and the sample rate
     """
     listen_time = time  # seconds
     frames, sample_rate = record_audio(listen_time)
-    frames /= max(frames)
-    frames *= 2**15
     samples = np.empty(0)
     for i in frames:
         samples = np.append(samples, np.frombuffer(i, np.int16))
+    samples = samples.astype("float32")
+    samples /= np.max(samples)
+    samples *= 2 ** 15
     return samples, sample_rate

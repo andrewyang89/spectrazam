@@ -1,4 +1,4 @@
-import id_to_piece
+import ID_to_piece
 import song_loading as sl
 from scipy.ndimage.morphology import generate_binary_structure, binary_erosion, iterate_structure
 import numpy as np
@@ -18,5 +18,5 @@ def run(duration):
 
     tally, song = qtd.query_match(fingerprints, "fingerprints_database.pkl")
 
-    print(id_to_piece.ID_to_piece[song])
+    print(ID_to_piece.ID_to_piece[song])
     print(tally)
