@@ -1,13 +1,12 @@
-
 import numpy as np
 from typing import List, Tuple
-
-
-
+import song_loading as sl
+from id_to_piece import ID_to_piece
 
 song_IDs = np.array([])  # Given
 
 song_info = {}  # dictionary mapping song ID to song titles and artists
+
 
 def identify_song(song_ID: int):
     """
@@ -22,9 +21,8 @@ def identify_song(song_ID: int):
     song, artist = song_info[song_ID]
     print("Song Title: {}".format(song))
     print("Artist: {}".format(artist))
-    
-    
-    
+
+
 def add_songs(song_name_list: List[str], artist_list: List[str]):
     """
     Adds the list of song names and artists into the database, and 
@@ -41,29 +39,12 @@ def add_songs(song_name_list: List[str], artist_list: List[str]):
     global song_IDs
     new_song_IDs = np.arange(len(song_IDs), len(song_IDs) + len(song_name_list))
 
-    song_IDs = np.arange(len(song_IDs) + len(song_name_list))  #updates song_IDs
-    
+    song_IDs = np.arange(len(song_IDs) + len(song_name_list))  # updates song_IDs
+
     for song_ID in new_song_IDs:
         offset = len(song_info)
-        song_info[song_ID] = (song_name_list[song_ID-offset], artist_list[song_ID-offset])
+        song_info[song_ID] = (song_name_list[song_ID - offset], artist_list[song_ID - offset])
 
-def song_name_to_ID(song_name: str) -> int:
-    """
-    Identifies the unique ID of the song given the name
-    
-    Parameters:
-    -----------
-    song_name: str
-        Name of song
-    
-    Returns:
-    --------
-    song_ID: int
-        Unique ID of the song
-    """
-    song_names = [piece[0] for piece in ID_to_piece.values()]
-    song_ID = song_names.index(song_name)
-    return song_ID
 
 def song_artist_to_songs(artist_name: str) -> List[str]:
     """
@@ -116,3 +97,19 @@ def delete_song_name(song_name: str):
     ID_to_piece.pop(song_name_to_ID(song_name))
     
     
+def song_name_to_ID(names: list) -> dict:
+    """
+        Provides the unique ID of the song given the name
+
+        Parameters:
+        -----------
+        names: List
+            List of names
+
+        Returns:
+        --------
+        dictionary: dict
+            Dictionary of unique IDs and songs
+        """
+    dictionary = {names[i]: i for i in range(len(names))}
+    return dictionary
