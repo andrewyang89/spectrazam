@@ -7,8 +7,6 @@ import querying_tallying_database as qtd
 
 def run():
     ids, music_list = sl.load_music_files("Music/")
-    print(ids)
-    print(music_list)
 
     S = {}
     freqs = {}
@@ -20,14 +18,11 @@ def run():
         freqs[ids[i]] = spectrograms[1]
         times[ids[i]] = spectrograms[2]
 
-    print(S)
-    print(freqs)
-    print(times)
 
     fp = iterate_structure(generate_binary_structure(2, 1), 20)
 
     fingerprints = {}
     for song_id in S:
-        fingerprints[song_id] = ff.fingerprint(S[song_id], fp, .1, 5)
+        fingerprints[song_id] = fingerprint(S[song_id], fp, np.percentile(S[song_id], 75), 15)
 
     qtd.write_database(fingerprints, "fingerprints_database.pkl")
