@@ -86,3 +86,20 @@ def song_artist_to_songs(artist_name: str) -> List[str]:
     songs = [song_names[i] for i in song_IDs]
     return songs
 
+def check_song(song_name: str) -> bool:
+    """
+    Checks if a song is in the dictionary.
+    
+    Parameters:
+    -----------
+    song_name: str
+        Name of input song
+    
+    Returns:
+    --------
+    exists: bool
+        Does the song exist in the database?
+    """
+    song_names = [piece[0] for piece in ID_to_piece.values()]  #list of all songs
+    return song_name in song_names
+
