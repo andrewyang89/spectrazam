@@ -65,3 +65,24 @@ def song_name_to_ID(song_name: str) -> int:
     song_ID = song_names.index(song_name)
     return song_ID
 
+def song_artist_to_songs(artist_name: str) -> List[str]:
+    """
+    Identifies the names of songs in the database by given artist.
+    
+    Parameters:
+    -----------
+    artist_name: str
+        Name of artist
+    
+    Returns:
+    --------
+    songs: List[str]
+        List of songs by given artist
+    """
+    
+    song_names = [piece[0] for piece in ID_to_piece.values()]  #list of all songs
+    artist_names = [piece[1] for piece in ID_to_piece.values()]  #list of all artists
+    song_IDs = [index for index, element in enumerate(artist_names) if element == artist_name]  #ID's of songs with input artist
+    songs = [song_names[i] for i in song_IDs]
+    return songs
+
