@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+ID_to_piece{0: ("Clair de Lune", "Claude Debussy, Roxane Elfasci (guitare)"),
+=======
 ID_to_piece = {0: ("Clair de Lune", "Claude Debussy, Roxane Elfasci"),
+>>>>>>> c17266186bb066acf6c336819474524e07fecfdb
             1: ("Cult of Personality", "Living Colour"),
             2: ("Fuel", "Metallica"),
             3: ("Grace", "Lamb of God"),
