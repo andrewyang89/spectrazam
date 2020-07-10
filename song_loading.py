@@ -13,6 +13,7 @@ import matplotlib.mlab as mlab
 from os import listdir
 from os.path import isfile, join
 
+import song_titles_artists as sta
 
 def load_song_from_path(path: str):
     """
@@ -57,7 +58,9 @@ def load_music_files(directory: str):
     """
     files = [f for f in listdir(directory) if isfile(join(directory, f))]
     music_list = np.array([load_song_from_path(directory + paths)[0] for paths in files])
-    return files, music_list
+    id_dict = sta.song_name_to_ID(files)
+    ids = [id_dict[title] for title in files]
+    return ids, music_list
 
 
 def return_specgram(samples: np.ndarray, sampling_rate: int):
