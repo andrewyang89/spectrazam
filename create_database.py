@@ -1,3 +1,4 @@
+import numpy as np
 import song_loading as sl
 import find_fingerprints as ff
 from scipy.ndimage.filters import maximum_filter
