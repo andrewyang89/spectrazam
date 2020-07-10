@@ -5,8 +5,8 @@ from scipy.ndimage.morphology import generate_binary_structure, binary_erosion
 from scipy.ndimage.morphology import iterate_structure
 import querying_tallying_database as qtd
 
-def run():
-    ids, music_list = sl.load_music_files("Music/")
+def run(music_directory):
+    ids, music_list = sl.load_music_files(music_directory)
 
     S = {}
     freqs = {}
@@ -23,6 +23,6 @@ def run():
 
     fingerprints = {}
     for song_id in S:
-        fingerprints[song_id] = fingerprint(S[song_id], fp, np.percentile(S[song_id], 75), 15)
+        fingerprints[song_id] = ff.fingerprint(S[song_id], fp, np.percentile(S[song_id], 75), 15)
 
     qtd.write_database(fingerprints, "fingerprints_database.pkl")
