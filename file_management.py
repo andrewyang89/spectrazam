@@ -52,11 +52,14 @@ def db_load(file_path=Path("./song_database.pkl")):
         return pickle.load(database)
 
 
-def delete_song(song_name: str):
+def delete_song(database, song_name: str):
     """Removes the specified song from the database
 
         Parameters
         ----------
+        database: dict
+            The database of fingerprint: song ID pairs
+
         song_name: str
             The title of the song to be removed
 
