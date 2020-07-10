@@ -103,3 +103,16 @@ def check_song(song_name: str) -> bool:
     song_names = [piece[0] for piece in ID_to_piece.values()]  #list of all songs
     return song_name in song_names
 
+def delete_song_name(song_name: str):
+    """
+    Deletes song name from ID_to_piece dictionary
+    
+    Parameters:
+    -----------
+    song_name: str
+        Name of song to be deleted
+    """
+    
+    ID_to_piece.pop(song_name_to_ID(song_name))
+    
+    
