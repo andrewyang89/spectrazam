@@ -1,5 +1,4 @@
 import pickle
-
 def write_database(fingerprints, filename):
     """
     Takes fingerprints and writes database and pickle dictionary
@@ -14,8 +13,6 @@ def write_database(fingerprints, filename):
 
     filename : str
         path to write the pickle file
-
-
     """
     database = {}
     for song in fingerprints:
@@ -24,8 +21,8 @@ def write_database(fingerprints, filename):
                 database[(fi, fj, dt)] = []
             database[(fi, fj, dt)].append((song, tm))
 
-    with open(filename, mode="wb") as opened_file:
-        pickle.dump(database, opened_file)
+    # call writing function with filename parameter
+    db_save(database, filename)
 
 def query_match(clip_fp, filename):
     """
@@ -40,8 +37,8 @@ def query_match(clip_fp, filename):
     filename : str
         path to read the pickle file
     """
-    with open(filename, mode="rb") as opened_file:
-        database = pickle.load(opened_file)
+    # call reading function with filename parameter
+    database = db_load(filename)
 
     tally = {}
     for (fm, fn, dt), t_clip in clip_fp:
