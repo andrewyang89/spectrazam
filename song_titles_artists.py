@@ -40,8 +40,10 @@ def add_songs(song_name_list: List[str], artist_list: List[str]):
     """
     global song_IDs
     new_song_IDs = np.arange(len(song_IDs), len(song_IDs) + len(song_name_list))
+
     song_IDs = np.arange(len(song_IDs) + len(song_name_list))  #updates song_IDs
     
-    for song_ID in song_IDs:
-        song_info[song_ID] = (song_name_list[song_ID], artist_list[song_ID])
+    for song_ID in new_song_IDs:
+        offset = len(song_info)
+        song_info[song_ID] = (song_name_list[song_ID-offset], artist_list[song_ID-offset])
 
