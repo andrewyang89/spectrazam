@@ -156,7 +156,7 @@ def fingerprint(data, fp, amp_min, fanout):
     print(len(peaks))
 
     for i in range(len(peaks)):
-        fm = peaks[i][1]
+        fm = peaks[i][0]
         
         r = min(i + fanout, len(peaks))
         
@@ -164,11 +164,11 @@ def fingerprint(data, fp, amp_min, fanout):
         
         for j in loop_over:
 
-            fn = peaks[j][1]
+            fn = peaks[j][0]
 
-            dt = peaks[j][0] - peaks[i][0]
+            dt = peaks[j][1] - peaks[i][1]
 
-            tm = peaks[i][0]
+            tm = peaks[i][1]
             
             
             insert = [tuple([fm,fn,dt]), tm]
