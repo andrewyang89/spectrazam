@@ -53,7 +53,8 @@ def db_load(file_path=Path("./song_database.pkl")):
 
 
 def delete_song(database, song_name: str):
-    """Removes the specified song from the database
+    """Removes the specified song from the database and returns the data upon
+        completion
 
         Parameters
         ----------
@@ -65,9 +66,12 @@ def delete_song(database, song_name: str):
 
         Returns
         -------
-        deleted: bool
+        Tuple[bool, Tuple]
+        delere: bool
             Whether or not a fingerprint: song pair with the specified song name
             was removed from the database
+        deleted: Tuple[str, str]
+            A tuple containing the piece name and the contributors, respectively
 
         Notes
         -----
@@ -82,10 +86,11 @@ def delete_song(database, song_name: str):
         one")
 
     """
-    deleted = False
+    delere = False
+    deleted = None
     song_id = song_name_to_ID(song_name)
     for fingerprint in database:
         if database[fingerprint] == song_id:
-            database.pop(fingerprint)
-            deleted = True
-    return deleted
+            deleted = database.pop(fingerprint)
+            delere = True
+    return (delere, deleted)
