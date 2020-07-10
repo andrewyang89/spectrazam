@@ -1,7 +1,7 @@
 import numpy as np
 from typing import List, Tuple
 import song_loading as sl
-from id_to_piece import ID_to_piece
+from ID_to_piece import ID_to_piece
 
 song_IDs = np.array([])  # Given
 
