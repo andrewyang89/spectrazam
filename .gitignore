@@ -104,5 +104,11 @@ fabric.properties
 # See https://youtrack.jetbrains.com/issue/JBR-2257
 .idea/$CACHE_FILE$
 
+# Pickle
+*.pickle
+
+# Idea
+.idea/
+
 # Remove previous ipynb_checkpoints
 #   git rm -r .ipynb_checkpoints/
