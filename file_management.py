@@ -1,6 +1,9 @@
 import pickle
 from pathlib import Path
 
+from song_titles_artists import song_name_to_ID
+
+
 def db_save(song_set: dict, filename="song_database.pkl"):
     """Saves the input database in binary
 
@@ -83,7 +86,7 @@ def delete_song(database, song_name: str):
 
     """
     deleted = False
-    song_id = song_name_to_ID(song_name)
+    song_id = song_name_to_ID(song_name) #TODO: Change the method (make a new one)
     for fingerprint in database:
         if database[fingerprint] == song_id:
             database.pop(fingerprint)

@@ -34,7 +34,8 @@ def load_song_from_path(path: str):
     song_path = Path(path)
     samples, sampling_rate = librosa.load(song_path, sr=None)
     duration = librosa.get_duration(y=samples, sr=sampling_rate)
-
+    samples /= max(samples)
+    samples *= 2**15
     return samples, sampling_rate, duration
 
 
@@ -109,6 +110,8 @@ def record_sound(time: float):
     """
     listen_time = time  # seconds
     frames, sample_rate = record_audio(listen_time)
+    frames /= max(frames)
+    frames *= 2**15
     samples = np.empty(0)
     for i in frames:
         samples = np.append(samples, np.frombuffer(i, np.int16))

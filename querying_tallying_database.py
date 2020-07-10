@@ -1,4 +1,7 @@
 import pickle
+
+import file_management
+
 def write_database(fingerprints, filename):
     """
     Takes fingerprints and writes database and pickle dictionary
@@ -22,7 +25,8 @@ def write_database(fingerprints, filename):
             database[(fi, fj, dt)].append((song, tm))
 
     # call writing function with filename parameter
-    db_save(database, filename)
+    file_management.db_save(database, filename)
+
 
 def query_match(clip_fp, filename):
     """
@@ -37,18 +41,21 @@ def query_match(clip_fp, filename):
     filename : str
         path to read the pickle file
     """
-    # call reading function with filename parameter
-    database = db_load(filename)
+    with open(filename, mode="rb") as opened_file:
+        database = pickle.load(opened_file)
 
     tally = {}
     for (fm, fn, dt), t_clip in clip_fp:
-        if not fp in database:
+        if not (fm, fn, dt) in database:
             continue
-        song, t_song = database[(fm, fn, dt)]
-        t_offset = t_song - t_clip
-        if not (song, t_offset) in tally:
-            tally[(song, t_offset)] = 0
-        tally[(song, t_offset)] += 1
+        for song, t_song in database[(fm, fn, dt)]:
+            t_offset = t_song - t_clip
+            if not (song, t_offset) in tally:
+                tally[(song, t_offset)] = 0
+            tally[(song, t_offset)] += 1
 
-    likely_song, offset = max(tally, key=tally.get)
-    return tally, likely_song
+    if tally:
+        likely_song, offset = max(tally, key=tally.get)
+        print(f"Tally{tally[(likely_song, offset)]}")
+        return tally, likely_song
+    return {}, -1  # Indicating no peaks matching

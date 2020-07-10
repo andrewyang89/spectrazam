@@ -1,29 +1,22 @@
+import id_to_piece
 import song_loading as sl
-import song_titles_artists as sta
+from scipy.ndimage.morphology import generate_binary_structure, binary_erosion, iterate_structure
+import numpy as np
+import find_fingerprints as ff
+import querying_tallying_database as qtd
 
-sampling_rate = 44100
-ids, music_list = sl.load_music_files("Music/")
-print(ids)
-print(music_list)
 
-S = {}
-freqs = {}
-times = {}
+def run(duration):
+    samples, sampling_rate = sl.record_sound(duration)
 
-for i in range(len(music_list)):
-    spectrograms = sl.return_specgram(music_list[i], 44100)
-    S[ids[i]] = spectrograms[0]
-    freqs[ids[i]] = spectrograms[1]
-    times[ids[i]] = spectrograms[2]
+    print(f"Sampling rate: {sampling_rate}")
+    spec = sl.return_specgram(samples, sampling_rate)[0]
 
-print(S)
-print(freqs)
-print(times)
+    fp = iterate_structure(generate_binary_structure(2, 1), 20)
 
-# samples, rate = sl.record_sound(2)
-# print(samples)
-# print(rate)
-# print(samples.shape)
-# spec = sl.return_specgram(samples, rate)[0]
-# print(spec)
+    fingerprints = ff.fingerprint(spec, fp, np.percentile(spec, 75), 15)
 
+    tally, song = qtd.query_match(fingerprints, "fingerprints_database.pkl")
+
+    print(id_to_piece.ID_to_piece[song])
+    print(tally)
